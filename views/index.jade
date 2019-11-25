@@ -1,0 +1,77 @@
+﻿extends layout
+
+block content
+    h1= title
+    p Welcome to #{title} 
+
+block scripts
+    script.
+        $(document).ready(function() {
+            var socket = io.connect('', {query: 'userId=158852&phone=0943282606&token=612a6fb9e5921a37df904ccdec14200a&os=web'});
+            //var socket = io.connect('', {query: 'userId=133609&token=28df776c06a2531374799ab4f7d8e3bf&phone=0938936128&os=Android'});
+            socket.on('connect', function(){
+                console.log('connected');                    
+            });                        
+
+            socket.on('connectSuccess', function(result) {
+                console.log('connectSuccess');
+                socket.emit('getUnreadRoomCount', {}, function(res) {
+                    console.log(res);
+                });                
+
+                //socket.emit('updateLink', { roomId: '59b781bf2271181eac44dff3', chatLogId: '59c0e04d998f2f1e5c97b564',
+                                        //    link: 'https://vnexpress.net', text: 'hhhhh kkkkkkk https://vnexpress.net https://tinhte.vn',
+                                         //   description: '', title: 'VNExpress', imageLink: 'http://s.baomoi.xdn.vn/web/styles/img/facebook-thumb.png', itemGUID: 'b0a0362c9f9949188ad1a9d8e2ab3d14-411219652602505124' }, function(data) {
+                                 //console.log(result);
+                    
+               // });
+                
+
+                //console.log(result);
+                //socket.emit('getChatRoom', { roomId: '59ae222356a2863f54a0b42e' }, function(data) {
+                    //console.log('privateChatRoom');
+                   // console.log(data);
+                    //var roomId = data.data._id;
+                    //socket.emit('sendText', { roomId: '59ae222356a2863f54a0b42e', text: 'testttt', itemGUID: 'xxxxxx'}, function(resX){
+                        //console.log(resX);
+                    //});
+                    //socket.emit('getRoomLogs', { roomId: roomId }, function(res) {
+                      //  console.log(res);                        
+                        //socket.emit('getRoomLogs', { roomId: roomId, lastLogId: '59a784eb7a8cb8efaa4f977e' }, function(res0) {
+                          //  console.log(res0);
+                        //});
+                    //});
+
+                    //socket.emit('generateUploadSAS', {roomId: roomId, itemGUID: 'abczzz', fileName: 'xxx.rar'}, function(res) {
+                        //console.log(res);
+                        //socket.emit('sendFile', { roomId: roomId, fileName: 'xxx.rar', link: res.data.link, size: 0 }, function(res0) {
+                           // console.log(res0);
+                        //}); 
+                    //});
+                //});               
+            });
+            socket.on('connectFail', function(data){
+                console.log('connectFail');
+                console.log(data);
+            });
+            socket.on('recentChatRoom', function(result){
+                console.log('recentChatRoom');
+                console.log(result);
+            });
+            socket.on('favoriteRecentChatRoom', function(result){
+                //console.log('favoriteRecentChatRoom');
+                //console.log(result);
+            });
+            socket.on('contactList', function(result){
+                //console.log('contactList');
+                //console.log(result);
+            });
+            socket.on('logIsViewed', function(result){
+                //console.log('logIsViewed');
+                //console.log(result);
+            });
+            socket.on('newMessage', function(data){
+                console.log('newMessage');
+                console.log(data);
+            });
+        });
