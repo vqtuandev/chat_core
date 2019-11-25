@@ -26,7 +26,7 @@
     "jade": "^1.6.0",
     "jsonwebtoken": "^8.4.0",
     "libphonenumber-js": "^1.7.16",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.13",
     "memory-cache": "^0.2.0",
     "moment": "^2.20.1",
     "mongodb": "^2.2.34",
