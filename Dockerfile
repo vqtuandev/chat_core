@@ -7,7 +7,7 @@ WORKDIR /usr/src/chat_core
 COPY . .
 RUN npm install
 
-ENV PORT=3000
+ENV PORT=3010
 
 EXPOSE $PORT
 
