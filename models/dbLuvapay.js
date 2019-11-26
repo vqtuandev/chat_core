@@ -1,10 +1,18 @@
 ﻿var MongoClient = require('mongodb').MongoClient;
 
+// var config = {
+//     hostUserName: 'luvapay',
+//     hostPassword: 'P12345768lvp',
+//     hostName: '45.119.214.134',
+//     port: 17017,
+//     databaseName: 'luvapay'
+// };
+
 var config = {
-    hostUserName: 'luvapay',
-    hostPassword: 'P12345768lvp',
-    hostName: '45.119.214.134',
-    port: 17017,
+    hostUserName: 'luva',
+    hostPassword:'123456798',
+    hostName: '149.28.151.248',
+    port: '27017',
     databaseName: 'luvapay'
 };
 
