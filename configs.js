@@ -10,7 +10,7 @@
     },
     // luvaServiceUrl: 'http://localhost:8005',
     // luvaServiceUrl: 'https://api.luvapay.com',
-    luvaServiceUrl: 'https://apidev.luvapay.com',
+    luvaServiceUrl: 'http://apidev.luvapay.com',
     systemName: 'LuvaPay',
     systemFullName: 'LuvaPay',
     defaultNotifyTitle: ''
