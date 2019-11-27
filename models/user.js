@@ -965,6 +965,7 @@ exports.updateOneSignalUserId = function (_id, oneSignalUserId, oneSignalAppId, 
                     }
                 }
                 else {
+                    if(!doc) doc = {};
                     doc.oneSignalUserIds = [{
                         oneSignalUserId: oneSignalUserId,
                         oneSignalAppId: oneSignalAppId,
