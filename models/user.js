@@ -425,7 +425,7 @@ function updateUserWithMyXteamInfo(_id, userId, email, token, name, avatar, call
 //                }
 //            }
 //        }
-//    );    
+//    );
 //}
 //exports.loginViaMyXteamV1 = loginViaMyXteamV1;
 
@@ -654,7 +654,7 @@ function updateUserAvatar(_id, avatar, callback) {
             if (err) {
                 errorLog.processError(err, callback);
             }
-            else {  
+            else {
                 var user = result.value;
                 user = parseUserInfo(user);
                 console.log(user);
@@ -896,7 +896,7 @@ function getUserHasContact(userId, callback) {
                 callback(resultHelper.returnResultDBError(err));
             }
             else {
-                //lấy tên liên hệ 
+                //lấy tên liên hệ
                 for (var i = 0; i < docs.length; i++) {
 
                     //lọc ra contact cần lấy
@@ -937,7 +937,7 @@ exports.updateOneSignalUserId = function (_id, oneSignalUserId, oneSignalAppId, 
                 callback(resultHelper.returnResultDBError(err));
             }
             else {
-                if (doc.oneSignalUserIds && doc.oneSignalUserIds.length > 0) {
+                if (doc && doc.oneSignalUserIds && doc.oneSignalUserIds.length > 0) {
                     var isFound = false;
                     for (var i = 0; i < doc.oneSignalUserIds.length && !isFound; i++) {
                         var osuId = doc.oneSignalUserIds[i];
@@ -1003,7 +1003,7 @@ function deleteOneSignalUserIdFromOtherUser(userId, oneSignalUserId) {
                     if (hasChange) {
 
                         collection.save(doc);
-                    }                    
+                    }
                 });
             }
         });
