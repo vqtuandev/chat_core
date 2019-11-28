@@ -344,7 +344,7 @@ function parseRoomName(roomInfo, userId) {
                         });
                         roomName = temp.map(function (el) { return el.userInfo.name; }).join();
                         if (!roomName) {
-                            roomName = roomInfo.members.length > 0 ? roomInfo.members[0].userInfo.name : 'Room ma';
+                            roomName = roomInfo.members.length > 0 && roomInfo.members[0].userInfo ? roomInfo.members[0].userInfo.name : 'Room ma';
                         }
                     }
                     break;
@@ -380,7 +380,7 @@ function parseRoomInfo(roomInfo, userId, ignoreMember) {
                     var roomAvatar = (roomInfo.members[0].userId == userId ? ((roomInfo.members[1] && roomInfo.members[1].userInfo) ? roomInfo.members[1].userInfo.avatar : '') : ((roomInfo.members[0] && roomInfo.members[0].userInfo) ? roomInfo.members[0].userInfo.avatar : ''));
 
                     roomInfo.roomAvatar = roomAvatar ? (azureHelper.azureStorageUrl + roomAvatar) : '';// ? roomAvatar : azureHelper.noAvatar);
-                    
+
                     roomInfo.item = undefined;
                     roomInfo.page = undefined;
                     roomInfo.userIdGuest = undefined;
@@ -534,7 +534,7 @@ function parseRoomInfo(roomInfo, userId, ignoreMember) {
         else {
             roomInfo.isViewed = true;
         }
-        if (roomInfo.lastLogAuthor && roomInfo.lastLogAuthor.avatar) {            
+        if (roomInfo.lastLogAuthor && roomInfo.lastLogAuthor.avatar) {
             roomInfo.lastLogAuthor.avatar = azureHelper.azureStorageUrl + roomInfo.lastLogAuthor.avatar;
         }
     }
@@ -776,7 +776,7 @@ function getRoomByIdNotCheckMember(roomId, userId, callback) {
                         }
                         //console.log('from db');
                         //console.log(doc);
-                        //console.log('get room from db');                    
+                        //console.log('get room from db');
                         //console.log(doc.members);
                         if (doc) {
                             //console.log('before cache');
@@ -896,7 +896,7 @@ function getPrivateRoom(userId1, userId2, userId, callback) {
             }
             else {
                 console.log(docs);
-                //nếu chưa có thì thêm mới                
+                //nếu chưa có thì thêm mới
                 if (docs.length == 0) {
                     //console.log('thêm mới private');
                     var doc = generatePrivateRoomDataModel(userId1, userId2);
@@ -1868,7 +1868,7 @@ exports.getRecentChatRoom = function (userId, lastDate, itemCount, callback) {
         .toArray(function (err, docs) {
             //console.log(docs[0].stages[0].$cursor.queryPlanner.winningPlan.inputStage.filter);
             //console.log(docs[0].stages[0].$cursor.queryPlanner.winningPlan.inputStage.inputStage);
-           
+
             //console.log(err);
             //console.log(docs);
             if (err) {
@@ -1882,7 +1882,7 @@ exports.getRecentChatRoom = function (userId, lastDate, itemCount, callback) {
                     //console.log(docs[i].members);
                     docs[i] = parseRoomInfo(docs[i], userId, true);
                 }
-              
+
                 callback(resultHelper.returnResultSuccess(docs));
             }
         });
@@ -3039,7 +3039,7 @@ function removeChatRoomMember(userId, roomId, memberInfo, callback) {
     if (removedUserId) {
         removedUserId = removedUserId.toString();
     }
-    
+
     collection.findOne(
         {
             _id: oid
@@ -3064,7 +3064,7 @@ function removeChatRoomMember(userId, roomId, memberInfo, callback) {
                             returnOriginal: false
                         },
                         function (err, result) {
-                            
+
                             if (err) {
                                 errorLog.addLog(errorLog.errorType.data, err, function () { });
                                 callback(resultHelper.returnResultDBError(err));
@@ -3286,7 +3286,7 @@ function createChannel(userId, members, isPrivate, roomName, roomAvatar, descrip
         else {
             doc._id = result.insertedIds[0];
             //console.log('after insert');
-            //console.log(doc.members);            
+            //console.log(doc.members);
             //console.log(doc);
             getRoomById(doc._id, userId, callback);
             //doc = parseRoomInfo(doc, userId);
@@ -3317,7 +3317,7 @@ function updateChannel(userId, roomId, isPrivate, roomName, description, joinLin
             else if (doc) {
                 var userItem = doc.members.find(function (val) { return val.userId == userId });
                 if (userItem.isOwner || (userItem.isAdmin && userItem.permissions && userItem.permissions.editInfo)) {
-                   
+
                     collection.findOneAndUpdate(
                         { _id: oid },
                         {
@@ -3546,7 +3546,7 @@ exports.getRoomBannedUser = function getRoomBannedUser(roomId, callback) {
     }
 }
 exports.setBanUser = function setBanUser(actionUserId, userId, roomId, isBanned, callback) {
-  
+
     cache.del(generateRoomCacheKey(roomId, userId));
     var collection = db.get().collection(rooms);
     var oid = parseIdToObject(roomId);
@@ -3556,7 +3556,7 @@ exports.setBanUser = function setBanUser(actionUserId, userId, roomId, isBanned,
                 _id: oid
             },
             function (errF, doc) {
-               
+
                 if (errF) {
                     errorLog.addLog(errorLog.errorType.data, errF, function () { });
                     callback(resultHelper.returnResultDBError(errF));
@@ -3887,7 +3887,7 @@ function getChannelAdminRoom(userIdGuest, channelAdmins, channelId, channelName,
                 callback(resultHelper.returnResultDBError(err));
             }
             else {
-              
+
                 //nếu chưa có thì thêm mới
                 if (docs.length == 0) {
                     var doc = generateChannelAdminRoomDataModel(userIdGuest, channelAdmins, channelId, channelName, channelAvatar);
